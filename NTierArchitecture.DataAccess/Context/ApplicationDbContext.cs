@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using NTierArchitecture.Entities.Models;
+using NTierArchitecture.Entities.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace NTierArchitecture.DataAccess.Context
 {
-    internal sealed class ApplicationDbContext : IdentityDbContext<AppUser, AppRole, Guid>
+    internal sealed class ApplicationDbContext : IdentityDbContext<AppUser, AppRole, Guid>,IUnitOfWork
     {
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
