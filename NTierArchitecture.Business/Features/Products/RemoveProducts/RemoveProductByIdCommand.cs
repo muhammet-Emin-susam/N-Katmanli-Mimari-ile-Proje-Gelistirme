@@ -8,5 +8,5 @@ using System.Threading.Tasks;
 namespace NTierArchitecture.Business.Features.Products.RemoveProducts
 {
     public sealed record RemoveProductByIdCommand(
-        Guid ID) : IRequest;
+        Guid ID) : IRequest<Unit>;
 }

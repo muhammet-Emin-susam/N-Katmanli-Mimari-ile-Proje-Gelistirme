@@ -12,6 +12,6 @@ namespace NTierArchitecture.Business.Features.Products.CreateProduct
         string Name,
         decimal Price,
         int Quantity,
-        Guid CategoryID) : IRequest;
+        Guid CategoryID) : IRequest<Unit>;
 
 }

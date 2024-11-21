@@ -1,0 +1,46 @@
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using NTierArchitecture.Business.Features.Categories.CreateCategory;
+using NTierArchitecture.Business.Features.Categories.GetCategories;
+using NTierArchitecture.Business.Features.Categories.RemoveCategory;
+using NTierArchitecture.Business.Features.Categories.UpdateCategory;
+using NTierArchitecture.Business.Features.Products.CreateProduct;
+using NTierArchitecture.Business.Features.Products.GetProducts;
+using NTierArchitecture.Business.Features.Products.RemoveProducts;
+using NTierArchitecture.Business.Features.Products.UpdateProducts;
+using NTierArchitecture.WebApi.Abstractions;
+
+namespace NTierArchitecture.WebApi.Controllers
+{
+    public sealed class CategoriesController : ApiController
+    {
+        public CategoriesController(IMediator mediator) : base(mediator)
+        {
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> Add(CreateCategoryCommand request, CancellationToken cancellationToken)
+        {
+            await _mediator.Send(request, cancellationToken);
+            return NoContent();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Update(UpdateCategoryCommand request, CancellationToken cancellationToken)
+        {
+            await _mediator.Send(request, cancellationToken);
+            return NoContent();
+        }
+        [HttpPost]
+        public async Task<IActionResult> RemoveByID(RemoveCategoryByIdCommand request, CancellationToken cancellationToken)
+        {
+            await _mediator.Send(request, cancellationToken);
+            return NoContent();
+        }
+        [HttpPost]
+        public async Task<IActionResult> GetAll(GetCategoriesQuery request, CancellationToken cancellationToken)
+        {
+            var response = await _mediator.Send(request, cancellationToken);
+            return Ok(response);
+        }
+    }
+}

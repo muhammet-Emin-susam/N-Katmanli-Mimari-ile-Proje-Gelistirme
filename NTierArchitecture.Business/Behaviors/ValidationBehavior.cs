@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace NTierArchitecture.Business.Behaviors
 {
     public sealed class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-        where TRequest : class, IRequest<TResponse>, IRequest
+        where TRequest : class, IRequest<TResponse>
     {
         private readonly IEnumerable<IValidator<TRequest>> _validator;
 

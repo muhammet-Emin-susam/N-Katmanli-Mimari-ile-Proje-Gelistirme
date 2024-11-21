@@ -5,7 +5,7 @@ using NTierArchitecture.Entities.Repositories;
 
 namespace NTierArchitecture.Business.Features.Products.CreateProduct
 {
-    internal sealed class CreateProductCommandHandler : IRequestHandler<CreateProductCommand>
+    internal sealed class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,Unit>
     {
         private readonly IProductRepository _repository;
         private readonly IUnitOfWork _unitOfWork;
@@ -17,7 +17,7 @@ namespace NTierArchitecture.Business.Features.Products.CreateProduct
             _mapper = mapper;
         }
 
-        public async Task Handle(CreateProductCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
             bool isProductNameExist = await _repository.AnyAsync(p => p.Name == request.Name, cancellationToken);
             if (isProductNameExist)
@@ -27,6 +27,7 @@ namespace NTierArchitecture.Business.Features.Products.CreateProduct
             Product product = _mapper.Map<Product>(request);
              await _repository.AddAsync(product,cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
+            return Unit.Value;
         }
     }
 
