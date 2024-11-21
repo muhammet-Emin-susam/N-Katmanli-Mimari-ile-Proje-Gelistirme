@@ -26,6 +26,11 @@ namespace NTierArchitecture.DataAccess.Repositories
             await _context.Set<T>().AddAsync(entity, cancellationToken);
         }
 
+        public async Task<bool> AnyAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken = default)
+        {
+            return await _context.Set<T>().AnyAsync(expression, cancellationToken);
+        }
+
         public IQueryable<T> GetAll()
         {
             return _context.Set<T>().AsQueryable();
