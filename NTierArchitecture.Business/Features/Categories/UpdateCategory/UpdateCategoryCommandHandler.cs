@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using NTierArchitecture.Entities.Models;
 using NTierArchitecture.Entities.Repositories;
 
@@ -8,11 +9,12 @@ namespace NTierArchitecture.Business.Features.Categories.UpdateCategory
     {
         private readonly ICategoryRepository _categoryRepository;
         private readonly IUnitOfWork _unitOfWork;
-
-        public UpdateCategoryCommandHandler(ICategoryRepository categoryRepository, IUnitOfWork unitOfWork)
+        private readonly IMapper _mapper;
+        public UpdateCategoryCommandHandler(ICategoryRepository categoryRepository, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _categoryRepository = categoryRepository;
+            _mapper = mapper;
         }
 
 
@@ -31,7 +33,7 @@ namespace NTierArchitecture.Business.Features.Categories.UpdateCategory
                 {
                     throw new ArgumentException("Bu kategori daha önce oluşturulmuş");
                 }
-                category.Name = request.Name;
+                _mapper.Map(request, category);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
             }
         }

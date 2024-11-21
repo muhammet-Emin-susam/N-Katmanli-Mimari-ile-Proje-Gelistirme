@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using NTierArchitecture.Entities.Models;
 using NTierArchitecture.Entities.Repositories;
 
@@ -8,11 +9,12 @@ namespace NTierArchitecture.Business.Features.Products.CreateProduct
     {
         private readonly IProductRepository _repository;
         private readonly IUnitOfWork _unitOfWork;
-
-        public CreateProductCommandHandler(IProductRepository repository, IUnitOfWork unitOfWork)
+        private readonly IMapper _mapper;
+        public CreateProductCommandHandler(IProductRepository repository, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _repository = repository;
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         public async Task Handle(CreateProductCommand request, CancellationToken cancellationToken)
@@ -22,13 +24,7 @@ namespace NTierArchitecture.Business.Features.Products.CreateProduct
             {
                 throw new ArgumentException("Bu ürün daha önce tanımlanmış");
             }
-            Product product = new()
-            {
-                Name = request.Name,
-                Price = request.Price,
-                Quantity = request.Quantity,
-                CategoryID = request.CategoryID
-            };
+            Product product = _mapper.Map<Product>(request);
              await _repository.AddAsync(product,cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
         }

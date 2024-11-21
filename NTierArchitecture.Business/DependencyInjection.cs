@@ -1,10 +1,5 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NTierArchitecture.Business
 {
@@ -18,6 +13,7 @@ namespace NTierArchitecture.Business
                 cfr.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly);
             });
             services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
+            services.AddAutoMapper(typeof(DependencyInjection).Assembly); 
             return services;
         }
     }

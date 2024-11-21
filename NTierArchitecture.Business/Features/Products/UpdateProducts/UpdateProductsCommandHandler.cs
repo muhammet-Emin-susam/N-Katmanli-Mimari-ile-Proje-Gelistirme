@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using NTierArchitecture.Entities.Models;
 using NTierArchitecture.Entities.Repositories;
 
@@ -8,11 +9,12 @@ namespace NTierArchitecture.Business.Features.Products.UpdateProducts
     {
         private readonly IProductRepository _productRepository;
         private readonly IUnitOfWork _unitOfWork;
-
-        public UpdateProductsCommandHandler(IProductRepository productRepository, IUnitOfWork unitOfWork)
+        private readonly IMapper _mapper;
+        public UpdateProductsCommandHandler(IProductRepository productRepository, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _productRepository = productRepository;
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         public async Task Handle(UpdateProductsCommand request, CancellationToken cancellationToken)
@@ -30,10 +32,7 @@ namespace NTierArchitecture.Business.Features.Products.UpdateProducts
                     throw new ArgumentException("Bu ürün adı daha önce kullanılmış!");
                 }
             }
-            product.Name = request.Name;
-            product.Quantity = request.Quantity;
-            product.CategoryID = request.CategoryId;
-            product.Price = request.Price;
+            _mapper.Map(request,product);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
     }
