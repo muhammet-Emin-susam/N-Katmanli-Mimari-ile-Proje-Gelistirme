@@ -32,7 +32,7 @@ namespace NTierArchitecture.WebApi.Controllers
         [RoleFilter("Product.Remove")]
         public async Task<IActionResult> RemoveByID(RemoveProductByIdCommand request, CancellationToken cancellationToken)
         {
-            await _mediator.Send(request, cancellationToken);
+            await  _mediator.Send(request, cancellationToken);
             return NoContent();
         }
         [HttpPost]
