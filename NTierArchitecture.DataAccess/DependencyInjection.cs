@@ -30,6 +30,7 @@ namespace NTierArchitecture.DataAccess
                 cfr.Password.RequireNonAlphanumeric = false;
             }).AddEntityFrameworkStores<ApplicationDbContext>();
 
+            
             services.AddScoped<IUnitOfWork>(sv=> sv.GetRequiredService<ApplicationDbContext>());
 
             services.Scan(selector => selector
