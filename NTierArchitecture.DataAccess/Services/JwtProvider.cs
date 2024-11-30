@@ -29,7 +29,8 @@ namespace NTierArchitecture.DataAccess.Services
             Claim[] claims = new Claim[]
             {
             new Claim("NameLastname", string.Join(" ",user.Name,user.LastName)),
-            new Claim("Email", user.Email)
+            new Claim("Email", user.Email),
+            new Claim(ClaimTypes.NameIdentifier,user.Id.ToString())
             };
 
             JwtSecurityToken securityToken = new(

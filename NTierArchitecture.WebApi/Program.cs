@@ -5,6 +5,7 @@ using Microsoft.OpenApi.Models;
 using NTierArchitecture.Business;
 using NTierArchitecture.DataAccess;
 using NTierArchitecture.Entities.Options;
+using NTierArchitecture.WebApi.MiddleWare;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,6 +28,7 @@ builder.Services.AddAuthentication().AddJwtBearer(cfr =>
 builder.Services.AddAuthorization();
 builder.Services.AddBusiness();
 builder.Services.AddDataAccess(builder.Configuration);
+builder.Services.AddTransient<ExceptionMiddleware>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -64,7 +66,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseMiddleware<ExceptionMiddleware>();
 app.UseHttpsRedirection();
 
 app.MapControllers();

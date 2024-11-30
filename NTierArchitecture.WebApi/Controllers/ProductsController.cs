@@ -4,6 +4,7 @@ using NTierArchitecture.Business.Features.Products.CreateProduct;
 using NTierArchitecture.Business.Features.Products.GetProducts;
 using NTierArchitecture.Business.Features.Products.RemoveProducts;
 using NTierArchitecture.Business.Features.Products.UpdateProducts;
+using NTierArchitecture.DataAccess.Authorization;
 using NTierArchitecture.WebApi.Abstractions;
 
 namespace NTierArchitecture.WebApi.Controllers
