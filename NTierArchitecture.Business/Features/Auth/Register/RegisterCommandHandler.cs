@@ -34,6 +34,8 @@ namespace NTierArchitecture.Business.Features.Auth.Register
                 LastName = request.Lastname
             };
             await _userManager.CreateAsync(user, request.Password);
+
+
             return Unit.Value;
         }
     }
