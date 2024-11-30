@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using ErrorOr;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace NTierArchitecture.Business.Features.Categories.UpdateCategory
 {
     public sealed record UpdateCategoryCommand(
         Guid ID,
-        string Name):IRequest;
+        string Name):IRequest<ErrorOr<Unit>>;
 }
 

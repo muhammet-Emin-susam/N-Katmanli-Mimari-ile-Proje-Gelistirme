@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
+using ErrorOr;
 using MediatR;
 using NTierArchitecture.Entities.Models;
 using NTierArchitecture.Entities.Repositories;
 
 namespace NTierArchitecture.Business.Features.Categories.UpdateCategory
 {
-    internal sealed class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryCommand>
+    internal sealed class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryCommand, ErrorOr<Unit>>
     {
         private readonly ICategoryRepository _categoryRepository;
         private readonly IUnitOfWork _unitOfWork;
@@ -18,12 +19,12 @@ namespace NTierArchitecture.Business.Features.Categories.UpdateCategory
         }
 
 
-        public async Task Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<Unit>> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
         {
             Category category = await _categoryRepository.GetByIdAsync(p => p.ID == request.ID, cancellationToken);
             if (category is null)
             {
-                throw new ArgumentException("Kategori Bulunamadı");
+                return Error.Conflict("Kategori Bulunamadı");
             }
             if (category.Name != request.Name)
             {
@@ -31,11 +32,12 @@ namespace NTierArchitecture.Business.Features.Categories.UpdateCategory
 
                 if (isCategoryNameExist)
                 {
-                    throw new ArgumentException("Bu kategori daha önce oluşturulmuş");
+                    return Error.Conflict("Bu kategori daha önce oluşturulmuş");
                 }
                 _mapper.Map(request, category);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
             }
+            return Unit.Value;
         }
     }
 }
