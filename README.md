@@ -28,7 +28,7 @@ Bu proje, ASP.NET Core kullanılarak geliştirilen ve N Katmanlı Mimari prensip
 
 1. Bu repoyu klonlayın:
    ```bash
-  git clone https://github.com/muhammet-Emin-susam/N-Katmanli-Mimari-ile-Proje-Gelistirme.git
+   git clone https://github.com/muhammet-Emin-susam/N-Katmanli-Mimari-ile-Proje-Gelistirme.git
   
 2.Gerekli NuGet paketlerini yükleyin.
 
